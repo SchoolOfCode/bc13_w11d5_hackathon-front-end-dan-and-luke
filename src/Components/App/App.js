@@ -3,17 +3,17 @@ import InputList from '../ListInput';
 import './App.css';
 import ShowList from '../ShowList';
 import { useState, useContext, useEffect, createContext } from 'react';
-
+import useDocumentTitle from '../Hook/useTitle';
 const url = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:3001/api";
 
 function App() {
 
   const [list, setList] = useState([]);
   const ThemeContext = createContext(null);
-  // Fetching shopping list data from shopping list API.
+  
   useEffect(() => {
     async function getChristmasList() {
-      const response = await fetch(`${url}/api/items`);
+      const response = await fetch(`${url}/items`);
       const data = await response.json(response);
       console.log(data);
       setList(data.payload);
@@ -22,13 +22,13 @@ function App() {
   }, []);
   
   async function addToList(newListItem) {
-    //This function changes the state of the list by pushing the text from the input field in to the array.
+    
     const listItemWithoutId = {
       name: newListItem,
       completed: false,
     };
 
-    const response = await fetch(`${url}/api/items`, {
+    const response = await fetch(`${url}/items`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(listItemWithoutId),
@@ -46,22 +46,24 @@ function App() {
   
   
   
-  function tickItem(idOfTickedItem) {
-    setList((previous) => {
-      return previous.map((item) => {
-        return item.id !== idOfTickedItem
-        ? item
-        : { ...item, completed: !item.completed };
-      });
-    });
-  }
-
+  // function tickItem(idOfTickedItem) {
+  //   setList((previous) => {
+  //     return previous.map((item) => {
+  //       return item.id !== idOfTickedItem
+  //       ? item
+  //       : { ...item, completed: !item.completed };
+  //     });
+  //   });
+  // }
+  
   const [theme, setTheme] = useState('normal');
   const bclassName = 'button-' + theme;
-  const oclassname = 'list' + theme;
+  const lclassName = 'list-' + theme
+  const pclassName = 'p-'+ theme
+  
   return (
             <>
-           
+           <p className={pclassName}>Christmas list!</p>
         <button
           className={bclassName}
           checked={theme === 'christmas'}
@@ -75,8 +77,8 @@ function App() {
       
     <ThemeContext.Provider value={theme}>
     <section>
-      <InputList addToList={addToList} buttonText={"Add To List"} />
-      <ShowList list={list} tickItem={tickItem}  />
+      <InputList addToList={addToList} buttonText={"Add To List"} theme={theme} />
+      <ShowList list={list}  className= {lclassName} theme ={theme} />
       
     </section>
     

@@ -1,12 +1,12 @@
-import React from "react";
+import { useContext } from "react";
 
-
-function ListItem({ name, completed, tickItem }) {
+function ListItem({ name, completed, theme }) {
+    const className = 'item' + theme 
   return (
     <li
       data-testid="list-item"
-      className={completed ? "tickedItem" : "untickedItem"}
-      onClick={tickItem}
+      className={className}
+      
     >
       {name}
     </li>

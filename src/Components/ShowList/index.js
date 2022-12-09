@@ -1,10 +1,11 @@
 import React from "react";
 import ListItem from "../Item";
-import { useState } from "react";
+import { useState , useContext} from "react";
 
 function ShowList({ list, tickItem ,}) {
     const [theme, setTheme] = useState('normal');
-    const className = 'list' + theme;
+    const className = 'item-' + theme;
+    
   return (
     <ol className={className}>
       {list.map((listItem) => (
@@ -12,7 +13,7 @@ function ShowList({ list, tickItem ,}) {
           name={listItem.name}
           completed={listItem.completed}
           key={listItem.id}
-          tickItem={() => tickItem(listItem.id)}
+          
         />
       ))}
     </ol>
