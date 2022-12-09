@@ -6,10 +6,10 @@ import { useState, useContext, useEffect, createContext } from 'react';
 import useDocumentTitle from '../Hook/useTitle';
 const url = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:3001/api";
 
+export const ThemeContext = createContext(null);
 function App() {
 
   const [list, setList] = useState([]);
-  const ThemeContext = createContext(null);
   
   useEffect(() => {
     async function getChristmasList() {

@@ -1,7 +1,11 @@
-import { useContext } from "react";
-
-function ListItem({ name, completed, theme }) {
-    const className = 'item' + theme 
+import './index.css'
+import { useState , useContext} from "react";
+import { ThemeContext } from "../App/App";
+function ListItem({ name, completed, }) {
+  const theme = useContext(ThemeContext)
+    const className = 'item-' + theme;
+    console.log(theme)
+    
   return (
     <li
       data-testid="list-item"
