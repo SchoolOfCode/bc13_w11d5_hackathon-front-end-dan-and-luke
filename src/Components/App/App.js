@@ -10,7 +10,7 @@ export const ThemeContext = createContext(null);
 function App() {
 
   const [list, setList] = useState([]);
-  
+
   useEffect(() => {
     async function getChristmasList() {
       const response = await fetch(`${url}/items`);
@@ -20,9 +20,9 @@ function App() {
     }
     getChristmasList();
   }, []);
-  
+
   async function addToList(newListItem) {
-    
+
     const listItemWithoutId = {
       name: newListItem,
       completed: false,
@@ -32,20 +32,20 @@ function App() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(listItemWithoutId),
-      
+
     });
 
-    
+
 
     const data = await response.json();
     const listItemWithId = data.payload;
-    
+
     setList((previous) => [...previous, listItemWithId]);
     console.log(listItemWithoutId)
   }
-  
-  
-  
+
+
+
   // function tickItem(idOfTickedItem) {
   //   setList((previous) => {
   //     return previous.map((item) => {
@@ -55,35 +55,36 @@ function App() {
   //     });
   //   });
   // }
-  
+
   const [theme, setTheme] = useState('normal');
   const bclassName = 'button-' + theme;
   const lclassName = 'list-' + theme
-  const pclassName = 'p-'+ theme
-  
+  const pclassName = 'p-' + theme
+  const dclassName = 'd-' + theme
+
   return (
-            <>
-           <p className={pclassName}>Christmas list!</p>
-        <button
-          className={bclassName}
-          checked={theme === 'christmas'}
-          onClick={(e) => {
-            setTheme(e.target.checked ? 'normal' : 'christmas')
-            console.log("this is the button")
-          }}
-        >Use christmas mode</button>
-       
-        
-      
-    <ThemeContext.Provider value={theme}>
-    <section>
-      <InputList addToList={addToList} buttonText={"Add To List"} theme={theme} />
-      <ShowList list={list}  className= {lclassName} theme ={theme} />
-      
-    </section>
-    
-    </ThemeContext.Provider>
-    </>
+    <div className={dclassName}>
+      <p className={pclassName}>Christmas list!</p>
+      <button
+        className={bclassName}
+        checked={theme === 'christmas'}
+        onClick={(e) => {
+          setTheme(e.target.checked ? 'normal' : 'christmas')
+          console.log("this is the button")
+        }}
+      >Use christmas mode</button>
+
+
+
+      <ThemeContext.Provider value={theme}>
+        <section>
+          <InputList addToList={addToList} buttonText={"Add To List"} theme={theme} />
+          <ShowList list={list} className={lclassName} theme={theme} />
+
+        </section>
+
+      </ThemeContext.Provider>
+    </div>
   );
 }
 
